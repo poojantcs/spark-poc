@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.mahendran.poc</groupId>
+  <groupId>com.spark.poc</groupId>
   <artifactId>spark-poc</artifactId>
   <name>spark-poc</name>
-  <version>1.0-SNAPSHOT</version>
+  <version>12.2-SNAPSHOT</version>
   <build>
     <sourceDirectory>src/main/scala</sourceDirectory>
-    <testSourceDirectory>src/test/scala</testSourceDirectory>
     <pluginManagement>
       <plugins>
         <plugin>
@@ -97,37 +96,15 @@
           <target>11</target>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>org.scalatest</groupId>
-        <artifactId>scalatest-maven-plugin</artifactId>
-        <version>1.0</version>
-        <executions>
-          <execution>
-            <id>test</id>
-            <goals>
-              <goal>test</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-          <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
-          <junitxml>.</junitxml>
-          <filereports>WDF TestSuite.txt</filereports>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
   <dependencies>
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-core_2.12</artifactId>
-      <version>3.0.0</version>
+      <version>3.5.0</version>
       <scope>provided</scope>
       <exclusions>
-        <exclusion>
-          <artifactId>paranamer</artifactId>
-          <groupId>com.thoughtworks.paranamer</groupId>
-        </exclusion>
         <exclusion>
           <artifactId>avro</artifactId>
           <groupId>org.apache.avro</groupId>
@@ -137,7 +114,11 @@
           <groupId>org.apache.avro</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>hadoop-client</artifactId>
+          <artifactId>hadoop-client-api</artifactId>
+          <groupId>org.apache.hadoop</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>hadoop-client-runtime</artifactId>
           <groupId>org.apache.hadoop</groupId>
         </exclusion>
         <exclusion>
@@ -165,11 +146,15 @@
           <groupId>org.apache.curator</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>javax.servlet-api</artifactId>
-          <groupId>javax.servlet</groupId>
+          <artifactId>zookeeper</artifactId>
+          <groupId>org.apache.zookeeper</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>commons-lang3</artifactId>
+          <artifactId>jakarta.servlet-api</artifactId>
+          <groupId>jakarta.servlet</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-compress</artifactId>
           <groupId>org.apache.commons</groupId>
         </exclusion>
         <exclusion>
@@ -177,16 +162,16 @@
           <groupId>org.apache.commons</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>commons-text</artifactId>
+          <artifactId>commons-io</artifactId>
+          <groupId>commons-io</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-collections</artifactId>
+          <groupId>commons-collections</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>commons-collections4</artifactId>
           <groupId>org.apache.commons</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>jul-to-slf4j</artifactId>
-          <groupId>org.slf4j</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>jcl-over-slf4j</artifactId>
-          <groupId>org.slf4j</groupId>
         </exclusion>
         <exclusion>
           <artifactId>compress-lzf</artifactId>
@@ -197,24 +182,12 @@
           <groupId>org.lz4</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>zstd-jni</artifactId>
-          <groupId>com.github.luben</groupId>
-        </exclusion>
-        <exclusion>
           <artifactId>RoaringBitmap</artifactId>
           <groupId>org.roaringbitmap</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>commons-net</artifactId>
-          <groupId>commons-net</groupId>
-        </exclusion>
-        <exclusion>
           <artifactId>scala-xml_2.12</artifactId>
           <groupId>org.scala-lang.modules</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>json4s-jackson_2.12</artifactId>
-          <groupId>org.json4s</groupId>
         </exclusion>
         <exclusion>
           <artifactId>jersey-client</artifactId>
@@ -245,6 +218,22 @@
           <groupId>io.netty</groupId>
         </exclusion>
         <exclusion>
+          <artifactId>netty-transport-native-epoll</artifactId>
+          <groupId>io.netty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>netty-transport-native-epoll</artifactId>
+          <groupId>io.netty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>netty-transport-native-kqueue</artifactId>
+          <groupId>io.netty</groupId>
+        </exclusion>
+        <exclusion>
+          <artifactId>netty-transport-native-kqueue</artifactId>
+          <groupId>io.netty</groupId>
+        </exclusion>
+        <exclusion>
           <artifactId>stream</artifactId>
           <groupId>com.clearspring.analytics</groupId>
         </exclusion>
@@ -269,10 +258,6 @@
           <groupId>io.dropwizard.metrics</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>jackson-module-scala_2.12</artifactId>
-          <groupId>com.fasterxml.jackson.module</groupId>
-        </exclusion>
-        <exclusion>
           <artifactId>ivy</artifactId>
           <groupId>org.apache.ivy</groupId>
         </exclusion>
@@ -281,7 +266,7 @@
           <groupId>oro</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>pyrolite</artifactId>
+          <artifactId>pickle</artifactId>
           <groupId>net.razorvine</groupId>
         </exclusion>
         <exclusion>
@@ -294,107 +279,11 @@
         </exclusion>
       </exclusions>
     </dependency>
-    <dependency>
-      <groupId>org.apache.spark</groupId>
-      <artifactId>spark-streaming_2.12</artifactId>
-      <version>3.0.0</version>
-      <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.holdenkarau</groupId>
-      <artifactId>spark-testing-base_2.12</artifactId>
-      <version>2.4.5_0.14.0</version>
-      <scope>test</scope>
-      <exclusions>
-        <exclusion>
-          <artifactId>spark-hive_2.12</artifactId>
-          <groupId>org.apache.spark</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>spark-yarn_2.12</artifactId>
-          <groupId>org.apache.spark</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>spark-mllib_2.12</artifactId>
-          <groupId>org.apache.spark</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>scalatest_2.12</artifactId>
-          <groupId>org.scalatest</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>multisets_2.12</artifactId>
-          <groupId>io.github.nicolasstucki</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>scalacheck_2.12</artifactId>
-          <groupId>org.scalacheck</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>junit</artifactId>
-          <groupId>junit</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>jetty-util</artifactId>
-          <groupId>org.eclipse.jetty</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>hadoop-hdfs</artifactId>
-          <groupId>org.apache.hadoop</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>hadoop-hdfs</artifactId>
-          <groupId>org.apache.hadoop</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>hadoop-common</artifactId>
-          <groupId>org.apache.hadoop</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>hadoop-common</artifactId>
-          <groupId>org.apache.hadoop</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>hadoop-client</artifactId>
-          <groupId>org.apache.hadoop</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>hadoop-mapreduce-client-jobclient</artifactId>
-          <groupId>org.apache.hadoop</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>hadoop-mapreduce-client-jobclient</artifactId>
-          <groupId>org.apache.hadoop</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>hadoop-yarn-server-tests</artifactId>
-          <groupId>org.apache.hadoop</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>hadoop-yarn-server-tests</artifactId>
-          <groupId>org.apache.hadoop</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>hadoop-yarn-server-web-proxy</artifactId>
-          <groupId>org.apache.hadoop</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>hadoop-yarn-server-web-proxy</artifactId>
-          <groupId>org.apache.hadoop</groupId>
-        </exclusion>
-        <exclusion>
-          <artifactId>hadoop-minicluster</artifactId>
-          <groupId>org.apache.hadoop</groupId>
-        </exclusion>
-      </exclusions>
-    </dependency>
   </dependencies>
   <properties>
-    <spark.version>3.0.0</spark.version>
     <scala.compat.version>2.12</scala.compat.version>
-    <specs2.version>3.6.1</specs2.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <kafka-version>0-10</kafka-version>
+    <spark.version>3.5.0</spark.version>
   </properties>
 </project>
 

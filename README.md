@@ -1,45 +1,14 @@
-Spark-poc project is a Maven-Scala-Spark project that uses [Apache Spark 3.0](https://spark.apache.org/releases/spark-release-3-0-0.html).
-All these examples are coded in Scala language and tested in our development environment.
+gcloud commands:
 
-# Table of Contents (Spark Examples in Scala)
+>> Dataproc w/o auto
+gcloud dataproc clusters create spark35-testing-w3l-e2-high --region us-central1 --master-machine-type e2-standard-16 --master-boot-disk-size 500 --num-workers 2 --worker-machine-type e2-standard-16 --worker-boot-disk-size 500 --image-version 2.2-debian12
+gcloud dataproc jobs submit spark --cluster=spark35-testing-w3l-e2-high --class=com.example.SparkSapBomTemplateWithExplosion --jars=gs://spark_scala_testing/scala_app/spark-poc-12.2-SNAPSHOT.jar --region=us-central1  --properties=spark:spark.executor.memory=2g,spark:spark.driver.memory=2g -- GCS large dataprocW3large1502
 
-## Spark WordCount Example
-WordCount program takes file input path as 1st argument and output directory as 2nd argument.
 
- - The input data volume is under /src/main/resrouces is 21 MB.
- - The program sets the split size to 128 MB
-   - You will see min of 2 partitions though the input data volume is much lesser than 128 MB.
- - Alternativley you may generate 1GB data and place it under your input directory.
-    - You will see 9 partitions
-      - 1.21 GB / 128 MB = 9
+>> Dataproc w/ auto
+gcloud dataproc clusters create spark35-testing-w3l-e2-high-auto --autoscaling-policy CDF_AUTOSCALING_POLICY_V1 --region us-central1 --master-machine-type e2-standard-16 --master-boot-disk-size 500 --num-workers 2 --worker-machine-type e2-standard-16 --worker-boot-disk-size 500 --image-version 2.2-debian12
+gcloud dataproc jobs submit spark --cluster=spark35-testing-w3l-e2-high-auto --class=com.example.SparkSapBomTemplateWithExplosion --jars=gs://spark_scala_testing/scala_app/spark-poc-12.2-SNAPSHOT.jar --region=us-central1 --properties=spark:spark.executor.memory=2g,spark:spark.driver.memory=2g  -- GCS large dataprocAutoW3large1503
 
-## Building the project
 
-   mvn clean package
-
-## Running Tests
-
-   mvn test
-
-## Running WordCount in local
-
-    mkdir -p /tmp/input /tmp/output
-
-    cp src/main/resources/data.txt /tmp/input/
-
-    spark-submit --name wordcount_`date +%F_%T` --class com.mahendran.example.wordcount.WordCount --conf spark.yarn.submit.waitAppCompletion=false --master spark://localhost:4040  --queue testing target/spark-poc-1.0-SNAPSHOT.jar /tmp/input/data /tmp/output
-
-## Running WordCount in local with 1GB dataset
-
-    mkdir -p /tmp/input /tmp/output
-
-    cd src/main/shell
-
-    ./data-gen.sh
-
-     mv 1gb-data.txt /tmp/input/data.txt
-
-    spark-submit --name wordcount_`date +%F_%T` --class com.mahendran.example.wordcount.WordCount --conf spark.yarn.submit.waitAppCompletion=false --master spark://localhost:4040  --queue testing target/spark-poc-1.0-SNAPSHOT.jar /tmp/input/data /tmp/output
-
-## Create a maven-spark-scala project
-[How to maven-scala-spark  project in Intellij](https://medium.com/@mahen.it/spark-scala-maven-intellij-spark-3-0-8cad6eb7f799).
+>> Serverless Dataproc
+gcloud dataproc batches submit spark --class=com.example.SparkSapBomTemplateWithExplosion --jars=gs://spark_scala_testing/scala_app/spark-poc-12.1-SNAPSHOT.jar --region=us-central1 --version=2.2 -- GCS small dataprocServerlessW3small1452
