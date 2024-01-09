@@ -21,11 +21,9 @@ object SparkSapBomTemplateAlt {
 
 
   def main(args: Array[String]): Unit = {
-    // Create a Spark Session - Local
     val spark: SparkSession = SparkSession
       .builder()
       .appName("SampleSparkProgramInScala")
-      .master("local[*]")
       .getOrCreate()
 
     executionType = args(0)

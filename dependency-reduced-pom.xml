@@ -4,7 +4,7 @@
   <groupId>com.spark.poc</groupId>
   <artifactId>spark-poc</artifactId>
   <name>spark-poc</name>
-  <version>12.2-SNAPSHOT</version>
+  <version>0.0.2-SERVERLESS-DATAPROC</version>
   <build>
     <sourceDirectory>src/main/scala</sourceDirectory>
     <pluginManagement>
@@ -101,7 +101,7 @@
   <dependencies>
     <dependency>
       <groupId>org.apache.spark</groupId>
-      <artifactId>spark-core_2.12</artifactId>
+      <artifactId>spark-core_2.13</artifactId>
       <version>3.5.0</version>
       <scope>provided</scope>
       <exclusions>
@@ -122,19 +122,19 @@
           <groupId>org.apache.hadoop</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-launcher_2.12</artifactId>
+          <artifactId>spark-launcher_2.13</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-kvstore_2.12</artifactId>
+          <artifactId>spark-kvstore_2.13</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-network-common_2.12</artifactId>
+          <artifactId>spark-network-common_2.13</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>spark-network-shuffle_2.12</artifactId>
+          <artifactId>spark-network-shuffle_2.13</artifactId>
           <groupId>org.apache.spark</groupId>
         </exclusion>
         <exclusion>
@@ -186,7 +186,7 @@
           <groupId>org.roaringbitmap</groupId>
         </exclusion>
         <exclusion>
-          <artifactId>scala-xml_2.12</artifactId>
+          <artifactId>scala-xml_2.13</artifactId>
           <groupId>org.scala-lang.modules</groupId>
         </exclusion>
         <exclusion>
@@ -281,7 +281,7 @@
     </dependency>
   </dependencies>
   <properties>
-    <scala.compat.version>2.12</scala.compat.version>
+    <scala.compat.version>2.13</scala.compat.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spark.version>3.5.0</spark.version>
   </properties>
